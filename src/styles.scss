@@ -2,3 +2,27 @@
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
+
+
+:root {
+    --primary:hsl(26, 100%, 55%);
+    --white:hsl(0, 0%, 100%);
+    --gray:hsl(220, 14%, 75%);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: none;
+    list-style: none;
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+    height: 100vh;
+}
+
+.p-button {
+    padding: .8rem;
+}
