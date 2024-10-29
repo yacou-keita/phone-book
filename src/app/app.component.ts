@@ -1,13 +1,15 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
-import { Contact } from './entities/contact';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ContactService } from './services/contact.service';
 import { Regex } from './core/constants/regex.constant';
+import { TooltipModule } from 'primeng/tooltip';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 @Component({
@@ -19,15 +21,19 @@ import { Regex } from './core/constants/regex.constant';
     RouterOutlet,
     DialogModule,
     InputTextModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TooltipModule,
+    ConfirmDialogModule
   ],
+  providers: [ConfirmationService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
 
+
   contactService = inject(ContactService)
-  isModaleVisible = signal(true)
+  isModaleVisible = signal(false)
 
   addContactForm = new FormGroup({
     firstName: new FormControl("", Validators.required),
@@ -37,7 +43,7 @@ export class AppComponent {
       Validators.pattern(Regex.phone),
     ]),
     email: new FormControl("", [Validators.required, Validators.email]),
-    profilePhoto: new FormControl("", Validators.required),
+    profilePhoto: new FormControl(""),
   })
 
   get firstName() {
@@ -81,8 +87,6 @@ export class AppComponent {
 
 
 
-
-
   openModal() {
     this.isModaleVisible.update(() => true)
   }
@@ -97,5 +101,10 @@ export class AppComponent {
     this.contactService.register(newContact)
     this.addContactForm.reset()
     this.closeModal()
+  }
+
+  runDeleteContactById(id: number) {
+    if (id)
+      this.contactService.deleteById(id)
   }
 }

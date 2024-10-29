@@ -1,3 +1,4 @@
+<p-confirmDialog />
 <header>
   <div>
     <h2>gestionnaire de contact</h2>
@@ -16,17 +17,18 @@
         <th>Actions</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-product>
+    <ng-template pTemplate="body" let-contact>
       <tr>
-        <td>{{ product.lastName }}</td>
-        <td>{{ product.firstName }}</td>
-        <td>{{ product.phone }}</td>
-        <td>{{ product.email }}</td>
-        <td><img class="profile" [src]="product.profilePhoto" alt="" srcset=""></td>
+        <td>{{ contact.lastName }}</td>
+        <td>{{ contact.firstName }}</td>
+        <td>{{ contact.phone }}</td>
+        <td>{{ contact.email }}</td>
+        <td><img class="profile" [src]="contact.profilePhoto" alt="" srcset=""></td>
         <td>
-          <i pTooltip="Modifier cette tâche" tooltipPosition="left" class="pi pi-pencil"
+          <i pTooltip="Modifier ce contact" tooltipPosition="left" class="pi pi-pencil"
             style="font-size: 1.5rem; margin-right: 3rem;"></i>
-          <i pTooltip="Supprimer cette tâche" tooltipPosition="left" class="pi pi-trash" style="font-size: 1.5rem"></i>
+          <i (click)="runDeleteContactById(contact.id)" pTooltip="Supprimer ce contact" tooltipPosition="left"
+            class="pi pi-trash" style="font-size: 1.5rem"></i>
         </td>
       </tr>
     </ng-template>
@@ -74,7 +76,8 @@
         </small>
         }
       </div>
-      <p-button (onClick)="runRegisterContact()" label="Enregistrer le contact" severity="contrast" />
+      <p-button [disabled]="addContactForm.invalid" (onClick)="runRegisterContact()" label="Enregistrer le contact"
+        severity="contrast" />
     </form>
   </div>
 </p-dialog>
