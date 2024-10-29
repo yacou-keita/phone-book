@@ -5,9 +5,9 @@
 
 
 :root {
-    --primary:hsl(26, 100%, 55%);
-    --white:hsl(0, 0%, 100%);
-    --gray:hsl(220, 14%, 75%);
+    --primary: hsl(26, 100%, 55%);
+    --white: hsl(0, 0%, 100%);
+    --gray: hsl(220, 14%, 75%);
 }
 
 * {
@@ -25,4 +25,25 @@ body {
 
 .p-button {
     padding: .8rem;
+}
+
+.dialog-box {
+    padding: 0 1rem 2rem 1rem;
+}
+
+.dialog-box h2 {
+    margin-bottom: 1rem;
+}
+
+.dialog-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.dialog-box form div input {
+    width: 100%;
+    border: 2px solid var(--gray);
+    padding: .7rem;
+    border-radius: 7px;
 }
