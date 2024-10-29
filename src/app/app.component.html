@@ -25,7 +25,7 @@
         <td>{{ contact.email }}</td>
         <td><img class="profile" [src]="contact.profilePhoto" alt="" srcset=""></td>
         <td>
-          <i pTooltip="Modifier ce contact" tooltipPosition="left" class="pi pi-pencil"
+          <i (click)="openEditModal(contact)" pTooltip="Modifier ce contact" tooltipPosition="left" class="pi pi-pencil"
             style="font-size: 1.5rem; margin-right: 3rem;"></i>
           <i (click)="runDeleteContactById(contact.id)" pTooltip="Supprimer ce contact" tooltipPosition="left"
             class="pi pi-trash" style="font-size: 1.5rem"></i>

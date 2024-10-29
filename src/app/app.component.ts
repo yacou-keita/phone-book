@@ -10,6 +10,7 @@ import { Regex } from './core/constants/regex.constant';
 import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { Contact } from './entities/contact';
 
 
 @Component({
@@ -106,5 +107,11 @@ export class AppComponent {
   runDeleteContactById(id: number) {
     if (id)
       this.contactService.deleteById(id)
+  }
+
+  openEditModal(contact: Contact) {
+    const updateContact = { email: contact.email, firstName: contact.firstName, lastName: contact.lastName, phone: contact.phone, profilePhoto: contact.profilePhoto }
+    this.addContactForm.patchValue(updateContact)
+    this.openModal()
   }
 }
