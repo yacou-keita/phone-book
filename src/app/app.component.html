@@ -42,17 +42,37 @@
     <form [formGroup]="addContactForm" class="flex flex-row items-center gap-5">
       <div>
         <input type="text" placeholder="Saisissez votre nom" formControlName="lastName" />
-        <!-- <small>ssssss</small> -->
+        @if(isEmptyLastName){
+        <small class="failure">Veuillez saisir votre nom</small>
+        }
       </div>
       <div>
         <input type="text" placeholder="Saisissez votre prénom" formControlName="firstName" />
-        <!-- <small>ssssss</small> -->
+        @if(isEmptyFirstName){
+        <small class="failure">Veuillez saisir votre prénom</small>
+        }
       </div>
       <div>
         <input type="text" placeholder="Saisissez votre numéro de téléphone" formControlName="phone" />
+        @if(isEmptyPhone){
+        <small class="failure">
+          {{
+          isInvalidPhoneFormat ?
+          "Le numéro de téléphone doit commencer par 07, 01 ou 05 et contenir exactement 10 chiffres."
+          :"Veuillez saisir votre numéro de téléphone"}}
+        </small>
+        }
       </div>
       <div>
         <input type="email" placeholder="Saisissez votre adresse e-mail" formControlName="email" />
+        @if(isEmptyEmail){
+        <small class="failure">
+          {{
+          isInvalidEmailFormat ?
+          "Veuillez une adresse email valide"
+          :"Veuillez saisir votre adresse email"}}
+        </small>
+        }
       </div>
       <p-button (onClick)="runRegisterContact()" label="Enregistrer le contact" severity="contrast" />
     </form>

@@ -7,6 +7,7 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ContactService } from './services/contact.service';
+import { Regex } from './core/constants/regex.constant';
 
 
 @Component({
@@ -33,12 +34,53 @@ export class AppComponent {
     lastName: new FormControl("", Validators.required),
     phone: new FormControl("", [
       Validators.required,
-      Validators.minLength(9),
-
+      Validators.pattern(Regex.phone),
     ]),
-    email: new FormControl("", Validators.required),
+    email: new FormControl("", [Validators.required, Validators.email]),
     profilePhoto: new FormControl("", Validators.required),
   })
+
+  get firstName() {
+    return this.addContactForm.get("firstName")
+  }
+
+  get isEmptyFirstName() {
+    return this.firstName?.invalid && (this.firstName?.dirty || this.firstName?.touched)
+  }
+
+  get lastName() {
+    return this.addContactForm.get("lastName")
+  }
+
+  get isEmptyLastName() {
+    return this.lastName?.invalid && (this.lastName?.dirty || this.lastName?.touched)
+  }
+
+  get phone() {
+    return this.addContactForm.get("phone")
+  }
+
+  get isEmptyPhone() {
+    return this.phone?.invalid && (this.phone?.dirty || this.phone?.touched)
+  }
+
+  get isInvalidPhoneFormat() {
+    return this.phone?.hasError("pattern")
+  }
+
+  get email() {
+    return this.addContactForm.get("email")
+  }
+
+  get isEmptyEmail() {
+    return this.email?.invalid && (this.email?.dirty || this.email?.touched)
+  }
+  get isInvalidEmailFormat() {
+    return this.email?.hasError("email")
+  }
+
+
+
 
 
   openModal() {
@@ -51,8 +93,8 @@ export class AppComponent {
 
   runRegisterContact() {
     const { email, firstName, lastName, phone, profilePhoto } = this.addContactForm.value
-    const createContact = { email: email!, firstName: firstName!, lastName: lastName!, phone: phone!, profilePhoto: profilePhoto! }
-    this.contactService.register(createContact)
+    const newContact = { email: email!, firstName: firstName!, lastName: lastName!, phone: phone!, profilePhoto: profilePhoto! }
+    this.contactService.register(newContact)
     this.addContactForm.reset()
     this.closeModal()
   }

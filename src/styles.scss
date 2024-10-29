@@ -8,6 +8,7 @@
     --primary: hsl(26, 100%, 55%);
     --white: hsl(0, 0%, 100%);
     --gray: hsl(220, 14%, 75%);
+    --reg:red;
 }
 
 * {
@@ -46,4 +47,8 @@ body {
     border: 2px solid var(--gray);
     padding: .7rem;
     border-radius: 7px;
+}
+
+.failure {
+    color: var(--reg);
 }
