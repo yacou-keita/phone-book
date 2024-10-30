@@ -114,7 +114,7 @@ export class AppComponent {
   runRegisterContact() {
     const { email, firstName, lastName, phone, profilePhoto } = this.addContactForm.value
     const newContact = { email: email!, firstName: firstName!, lastName: lastName!, phone: phone!, profilePhoto: profilePhoto! }
-    this.contactService.register(newContact)
+    this.contactService.registerOrUpdate(newContact)
     this.addContactForm.reset()
     this.closeModal()
   }

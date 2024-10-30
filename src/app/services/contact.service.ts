@@ -6,26 +6,35 @@ import { contactList } from "../core/data/contactlist.data";
 export class ContactService {
     private _contactList = signal<Contact[]>(contactList)
 
-    get contactList() { return this._contactList() }
+    get contactList() { return this._contactList().reverse() }
 
-    register(contact: Contact) {
-        if (contact.id) {
-            const newContactList = this._contactList().map((contactFound: Contact) => {
-                if (contactFound.id === contact.id) {
-                    contactFound.id = contact.id
-                    contactFound.firstName = contact.firstName
-                    contactFound.lastName = contact.lastName
-                    contactFound.phone = contact.phone
-                    contactFound.profilePhoto = contact.profilePhoto
-                    return contactFound
-                }
-                return contactFound
-            })
-            this._contactList.set(newContactList)
+    registerOrUpdate(contact: Contact) {
+        const isEmptyId = !contact.id
+        if (isEmptyId) {
+            this.registerContact(contact);
             return
         }
-        contact.id = this._contactList.length + 1
-        this._contactList.update(() => [...this._contactList(), contact])
+
+        this.updateContact(contact);
+    }
+
+    private registerContact(contact: Contact) {
+        const maxId = this._contactList().reduce((max, contact) => Math.max(max, contact.id!), 0);
+        contact.id = maxId + 1;
+        this._contactList.update(() => [...this._contactList(), contact]);
+    }
+
+    private updateContact(contact: Contact) {
+        const contactToUpdate = this._contactList().find((contactFound: Contact) => contactFound.id === contact.id);
+
+        if (contactToUpdate) {
+            contactToUpdate.firstName = contact.firstName;
+            contactToUpdate.lastName = contact.lastName;
+            contactToUpdate.phone = contact.phone;
+            contactToUpdate.profilePhoto = contact.profilePhoto;
+        }
+
+        this._contactList.update(() => [...this._contactList()]);
     }
 
     deleteById(id: number) {

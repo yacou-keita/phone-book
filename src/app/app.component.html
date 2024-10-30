@@ -38,9 +38,8 @@
   <small>Yacou Keita © Tous droits réservés.</small>
 </footer>
 
-<p-dialog [modal]="true" [(visible)]="isModaleVisible" [style]="{ width: '40rem' }">
+<p-dialog [modal]="true" header="Ajouter un contact" [(visible)]="isModaleVisible" [style]="{ width: '40rem' }">
   <div class="dialog-box">
-    <h2 class="text-base">Ajouter un contact</h2>
     <form [formGroup]="addContactForm" class="flex flex-row items-center gap-5">
       <div>
         <input type="text" placeholder="Saisissez votre nom" formControlName="lastName" />
