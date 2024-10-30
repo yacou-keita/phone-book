@@ -28,6 +28,34 @@ body {
     padding: 0 1rem 2rem 1rem;
 }
 
+.profile-form {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.profile-form img {
+    width: 9rem;
+    height: 9rem;
+}
+
+.profile-form input {
+    display: none;
+}
+
+.profile-form div {
+    display: flex;
+    flex-direction: column-reverse;
+    height: 9rem;
+}
+
+.profile-form label {
+    background-color: var(--primary);
+    padding: .8rem 2rem;
+    border-radius: 7px;
+    color: var(--white);
+}
+
 .dialog-box form {
     display: flex;
     flex-direction: column;

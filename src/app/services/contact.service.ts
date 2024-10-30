@@ -14,7 +14,6 @@ export class ContactService {
             this.registerContact(contact);
             return
         }
-
         this.updateContact(contact);
     }
 

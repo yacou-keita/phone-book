@@ -38,6 +38,7 @@ export class AppComponent {
   isModaleVisible = signal(false)
 
   addContactForm = new FormGroup({
+    id: new FormControl<number | undefined>(undefined),
     firstName: new FormControl("", Validators.required),
     lastName: new FormControl("", Validators.required),
     phone: new FormControl("", [
@@ -45,7 +46,7 @@ export class AppComponent {
       Validators.pattern(Regex.phone),
     ]),
     email: new FormControl("", [Validators.required, Validators.email]),
-    profilePhoto: new FormControl(""),
+    profilePhoto: new FormControl("", Validators.required),
   })
 
   get firstName() {
@@ -87,6 +88,21 @@ export class AppComponent {
     return this.email?.hasError("email")
   }
 
+  get profilePhoto() {
+    return this.addContactForm.value.profilePhoto
+  }
+
+  onPhotoSelected(event: any): void {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = this.readFile;
+  }
+  private readFile = (event: any): void => {
+    const { target } = event
+    this.addContactForm.patchValue({ profilePhoto: target.result })
+  }
+
   openDeleteContactPopUp({ event, contactId }: { event: Event, contactId: number }) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
@@ -111,9 +127,21 @@ export class AppComponent {
     this.isModaleVisible.update(() => false)
   }
 
+  closeAndRestAddContactForm() {
+    this.addContactForm.reset()
+    this.closeModal()
+  }
+
   runRegisterContact() {
-    const { email, firstName, lastName, phone, profilePhoto } = this.addContactForm.value
-    const newContact = { email: email!, firstName: firstName!, lastName: lastName!, phone: phone!, profilePhoto: profilePhoto! }
+    const { email, firstName, lastName, phone, profilePhoto, id } = this.addContactForm.value
+    const newContact = {
+      email: email!,
+      firstName: firstName!,
+      lastName: lastName!,
+      phone: phone!,
+      profilePhoto: profilePhoto!,
+      id: id!
+    }
     this.contactService.registerOrUpdate(newContact)
     this.addContactForm.reset()
     this.closeModal()
@@ -125,7 +153,14 @@ export class AppComponent {
   }
 
   openEditModal(contact: Contact) {
-    const updateContact = { email: contact.email, firstName: contact.firstName, lastName: contact.lastName, phone: contact.phone, profilePhoto: contact.profilePhoto }
+    const updateContact = {
+      email: contact.email,
+      firstName: contact.firstName,
+      lastName: contact.lastName,
+      phone: contact.phone,
+      profilePhoto: contact.profilePhoto,
+      id: contact.id
+    }
     this.addContactForm.patchValue(updateContact)
     this.openModal()
   }

@@ -27,8 +27,8 @@
         <td>
           <i (click)="openEditModal(contact)" pTooltip="Modifier ce contact" tooltipPosition="left" class="pi pi-pencil"
             style="font-size: 1.5rem; margin-right: 3rem;"></i>
-          <i (click)="openDeleteContactPopUp({event:$event,contactId:contact.id})" pTooltip="Supprimer ce contact" tooltipPosition="left"
-            class="pi pi-trash" style="font-size: 1.5rem"></i>
+          <i (click)="openDeleteContactPopUp({event:$event,contactId:contact.id})" pTooltip="Supprimer ce contact"
+            tooltipPosition="left" class="pi pi-trash" style="font-size: 1.5rem"></i>
         </td>
       </tr>
     </ng-template>
@@ -38,9 +38,16 @@
   <small>Yacou Keita © Tous droits réservés.</small>
 </footer>
 
-<p-dialog [modal]="true" header="Ajouter un contact" [(visible)]="isModaleVisible" [style]="{ width: '40rem' }">
+<p-dialog [modal]="true" header="Ajouter un contact" [(visible)]="isModaleVisible" [style]="{ width: '40rem' }" >
   <div class="dialog-box">
     <form [formGroup]="addContactForm" class="flex flex-row items-center gap-5">
+      <div class="profile-form">
+        <img [src]="profilePhoto" alt="" srcset="">
+        <div>
+          <input (change)="onPhotoSelected($event)" type="file" id="select_image">
+          <label for="select_image">Ajouter une photo</label>
+        </div>
+      </div>
       <div>
         <input type="text" placeholder="Saisissez votre nom" formControlName="lastName" />
         @if(isEmptyLastName){
