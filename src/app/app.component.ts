@@ -8,9 +8,11 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ContactService } from './services/contact.service';
 import { Regex } from './core/constants/regex.constant';
 import { TooltipModule } from 'primeng/tooltip';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, Message } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Contact } from './entities/contact';
+import { imageFileExtention } from './core/utils/imageExtentionValidator';
+import { MessagesModule } from 'primeng/messages';
 
 
 @Component({
@@ -24,7 +26,8 @@ import { Contact } from './entities/contact';
     InputTextModule,
     ReactiveFormsModule,
     TooltipModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    MessagesModule
   ],
   providers: [ConfirmationService],
   templateUrl: './app.component.html',
@@ -48,6 +51,8 @@ export class AppComponent {
     email: new FormControl("", [Validators.required, Validators.email]),
     profilePhoto: new FormControl("", Validators.required),
   })
+
+  messages: Message[] = [];
 
   get firstName() {
     return this.addContactForm.get("firstName")
@@ -93,7 +98,13 @@ export class AppComponent {
   }
 
   onPhotoSelected(event: any): void {
+    this.messages = []
     const file = event.target.files[0];
+    const error = imageFileExtention(file.name)
+    if (error instanceof Error) {
+      this.messages = [{ severity: 'error', detail: error.message }];
+      return
+    }
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = this.readFile;

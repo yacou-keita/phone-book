@@ -38,7 +38,7 @@
   <small>Yacou Keita © Tous droits réservés.</small>
 </footer>
 
-<p-dialog [modal]="true" header="Ajouter un contact" [(visible)]="isModaleVisible" [style]="{ width: '40rem' }" >
+<p-dialog [modal]="true" header="Contact" [(visible)]="isModaleVisible" [style]="{ width: '40rem' }" >
   <div class="dialog-box">
     <form [formGroup]="addContactForm" class="flex flex-row items-center gap-5">
       <div class="profile-form">
@@ -48,6 +48,7 @@
           <label for="select_image">Ajouter une photo</label>
         </div>
       </div>
+      <p-messages [(value)]="messages" [enableService]="false" [closable]="false" />
       <div>
         <input type="text" placeholder="Saisissez votre nom" formControlName="lastName" />
         @if(isEmptyLastName){
