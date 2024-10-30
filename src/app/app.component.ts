@@ -34,6 +34,7 @@ export class AppComponent {
 
 
   contactService = inject(ContactService)
+  confirmationService = inject(ConfirmationService)
   isModaleVisible = signal(false)
 
   addContactForm = new FormGroup({
@@ -86,7 +87,21 @@ export class AppComponent {
     return this.email?.hasError("email")
   }
 
-
+  openDeleteContactPopUp({ event, contactId }: { event: Event, contactId: number }) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Êtes-vous sûr de vouloir supprimer ce contact ?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: "none",
+      rejectIcon: "none",
+      acceptLabel: "Oui",
+      rejectLabel: "Non",
+      rejectButtonStyleClass: "p-button-danger p-button-text",
+      acceptButtonStyleClass: "p-button-success",
+      accept: () => this.runDeleteContactById(contactId)
+    });
+  }
 
   openModal() {
     this.isModaleVisible.update(() => true)

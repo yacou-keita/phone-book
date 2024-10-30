@@ -11,7 +11,7 @@
     --reg:red;
 }
 
-* {
+*:not([class^="p-"]) {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -24,9 +24,7 @@ body {
     height: 100vh;
 }
 
-.p-button {
-    padding: .8rem;
-}
+
 
 .dialog-box {
     padding: 0 1rem 2rem 1rem;

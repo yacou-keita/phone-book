@@ -27,7 +27,7 @@
         <td>
           <i (click)="openEditModal(contact)" pTooltip="Modifier ce contact" tooltipPosition="left" class="pi pi-pencil"
             style="font-size: 1.5rem; margin-right: 3rem;"></i>
-          <i (click)="runDeleteContactById(contact.id)" pTooltip="Supprimer ce contact" tooltipPosition="left"
+          <i (click)="openDeleteContactPopUp({event:$event,contactId:contact.id})" pTooltip="Supprimer ce contact" tooltipPosition="left"
             class="pi pi-trash" style="font-size: 1.5rem"></i>
         </td>
       </tr>
